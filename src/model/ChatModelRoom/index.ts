@@ -1,0 +1,1 @@
+export { ChatModelRoom } from './ChatModelRoom';

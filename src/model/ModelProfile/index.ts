@@ -1,0 +1,1 @@
+export { ModelProfile } from './ModelProfile';
