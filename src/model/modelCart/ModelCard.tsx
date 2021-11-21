@@ -1,4 +1,5 @@
-import { FunctionComponent } from "react";
+import axios from "axios";
+import { FunctionComponent, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -16,9 +17,17 @@ interface IModelCardProps {
 
 export const ModelCard: FunctionComponent<IModelCardProps> = ({ item }) => {
   const navigate = useNavigate();
+  const [roomId] = useState("");
+  const [userName] = useState("");
+
   const pushToModelRoom = () => {
+    axios.post("http://localhost:9999/rooms", {
+      roomId,
+      userName,
+    });
     navigate(`/modelRoom/${item.id}`);
   };
+
   return (
     <div className="col-md-6 col-lg-4 p-1 col-sm-12">
       <Card>

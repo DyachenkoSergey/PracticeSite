@@ -1,9 +1,22 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { useFormik } from "formik";
 import { Button, Container, Row } from "react-bootstrap";
-import { signUpUsersFromApi } from "users/api/signUp";
+import { registerUser } from "users/api/users";
+import { useNavigate } from "react-router";
+import { ModalWindow } from "sharedComponents/Layout/modal";
 
-export const Registration: FunctionComponent = () => {
+export const Register: FunctionComponent = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [messages, setMessages] = useState("");
+  const navigate = useNavigate();
+
+  const openModal = (): void => {
+    setIsModalOpen(true);
+  };
+  const closeModal = (): void => {
+    setIsModalOpen(false);
+  };
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -11,7 +24,14 @@ export const Registration: FunctionComponent = () => {
       email: "",
     },
     onSubmit: (values) => {
-      signUpUsersFromApi(values).then((data) => console.log(data));
+      registerUser(values).then((data) => {
+        if (data === "created") {
+          navigate("/logInPage");
+        } else {
+          setMessages(data);
+          openModal();
+        }
+      });
     },
   });
   return (
@@ -36,7 +56,7 @@ export const Registration: FunctionComponent = () => {
           <input
             id="password"
             name="password"
-            type="text"
+            type="password"
             onChange={formik.handleChange}
             value={formik.values.password}
             placeholder="Password"
@@ -57,9 +77,14 @@ export const Registration: FunctionComponent = () => {
             variant="secondary"
             className="col-md-4 offset-4 mt-3 mb-5"
           >
-            Registration
+            Register
           </Button>
         </form>
+        <ModalWindow
+          messages={messages}
+          closeModal={closeModal}
+          isModalOpen={isModalOpen}
+        />
       </Row>
     </Container>
   );

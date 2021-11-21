@@ -1,33 +1,19 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { useFormik } from "formik";
-import {
-  Button,
-  Container,
-  OverlayTrigger,
-  Popover,
-  Row,
-} from "react-bootstrap";
-import { getUsersFromApi } from "users/api/logIn";
+import { Button, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
-
-interface IUsers {
-  name: string;
-  age?: string;
-  role?: string;
-  password: string;
-}
+import { login } from "../../../store/slices/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { userIdSelector } from "store/selectors/auth";
 
 export const LogInPage: FunctionComponent = () => {
-  const [user, setUser] = useState<IUsers | undefined | null>(null);
+  const isLogin = useSelector(userIdSelector);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const goToMainPage = () => {
+  if (isLogin) {
     navigate("/");
-  };
-
-  const goToSignUpPage = () => {
-    navigate("/registration");
-  };
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -35,9 +21,7 @@ export const LogInPage: FunctionComponent = () => {
       password: "",
     },
     onSubmit: (values) => {
-      getUsersFromApi(values).then((data) => {
-        setUser(data);
-      });
+      dispatch(login(values));
     },
   });
   return (
@@ -68,47 +52,14 @@ export const LogInPage: FunctionComponent = () => {
             placeholder="Password"
             className="mt-4"
           />
-          <OverlayTrigger
-            trigger="click"
-            key="bottom"
-            placement={"bottom"}
-            overlay={
-              <Popover id={`popover-positioned-bottom`}>
-                {user ? (
-                  <>
-                    <Popover.Header as="h4">{`Now you are logged in, ${user?.name}`}</Popover.Header>
-                    <Popover.Body className="text-center">
-                      <Button
-                        className="p-3"
-                        onClick={goToMainPage}
-                        variant="secondary"
-                      >
-                        OK
-                      </Button>
-                    </Popover.Body>{" "}
-                  </>
-                ) : (
-                  <>
-                    <Popover.Header as="h4">{`You are not logged in. Please`}</Popover.Header>
-                    <Popover.Body className="text-center d-flex justify-content-between">
-                      <h5 className="p-2">Try again or</h5>
-                      <Button className="p-2" onClick={goToSignUpPage}>
-                        Sign up
-                      </Button>
-                    </Popover.Body>
-                  </>
-                )}
-              </Popover>
-            }
+
+          <Button
+            type="submit"
+            variant="secondary"
+            className="col-md-4 offset-4 mt-3 mb-5"
           >
-            <Button
-              type="submit"
-              variant="secondary"
-              className="col-md-4 offset-4 mt-3 mb-5"
-            >
-              Submit
-            </Button>
-          </OverlayTrigger>
+            Submit
+          </Button>
         </form>
       </Row>
     </Container>
