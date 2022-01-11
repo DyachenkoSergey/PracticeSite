@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 
 export const UserProfile: FunctionComponent = () => {
   return (
-    <div className="container">
+    <div className="container bg-transparent">
       <div className="row gutters">
         <div className="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
           <div className="card h-100">

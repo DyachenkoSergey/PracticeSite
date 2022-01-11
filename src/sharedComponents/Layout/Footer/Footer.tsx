@@ -31,30 +31,6 @@ export const Footer: FunctionComponent = () => {
             </Button>
           </Nav.Link>
         </Nav>
-        {/* <Nav>
-          <Nav.Link>
-            <Button
-              variant="outline-light"
-              className="mr-1"
-              onClick={() => {
-                navigate("/logInPage");
-              }}
-            >
-              Log In
-            </Button>
-          </Nav.Link>
-          <Nav.Link>
-            <Button
-              variant="outline-light"
-              className="mr-1"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              Log Out
-            </Button>
-          </Nav.Link>
-        </Nav> */}
       </Navbar.Collapse>
     </Navbar>
   );

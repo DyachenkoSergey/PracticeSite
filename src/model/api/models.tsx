@@ -1,27 +1,26 @@
 import { server, SERVER_PATHS } from "constants/constants";
+import { IUser } from "interfaces/user";
 
 export const axios = require("axios").default;
 
-interface IModel {
-  name: string;
-  age: string;
-  role: string;
-  video: string;
-  id: string;
-}
-
-export const getAllModels = async (): Promise<IModel[]> => {
+export const getAllModels = async (values: string): Promise<IUser[]> => {
   try {
-    const response = await axios.get(`${server}${SERVER_PATHS.modelsList}`, {
-      withCredentials: false,
-    });
+    const response = await axios.post(
+      `${server}${SERVER_PATHS.modelsList}`,
+      {
+        values,
+      },
+      {
+        withCredentials: false,
+      }
+    );
     return response.data;
   } catch (error) {
     throw new Error();
   }
 };
 
-export const getTopModels = async (): Promise<IModel[]> => {
+export const getTopModels = async (): Promise<IUser[]> => {
   try {
     const response = await axios.get(`${server}${SERVER_PATHS.topModels}`, {
       withCredentials: false,

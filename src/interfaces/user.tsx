@@ -1,16 +1,16 @@
-export interface IUsers {
+export interface IUserParams {
   name: string;
-  age?: string;
-  role?: string;
   password?: string;
   email?: string;
+  role?: string;
 }
 
 export interface IUser {
   userId: string;
   userName: string;
-  userRole: string;
-  userPassword: string;
   userEmail: string;
   userTokens: number;
+  userRole: string;
+  userModels?: Array<string>;
+  token?: string;
 }

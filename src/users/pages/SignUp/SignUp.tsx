@@ -1,18 +1,15 @@
 import { FunctionComponent } from "react";
-import { Field, Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import { Button, Container, Row } from "react-bootstrap";
-import { useNavigate } from "react-router";
-import { login } from "../../../store/slices/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { userIdSelector, roleSelector } from "store/selectors/auth";
-import { loginValidation } from "utils/validation";
+import { signUpUser } from "users/api/users";
+import { useLocation, useNavigate } from "react-router";
+import { registrationValidation } from "../../../utils/validation";
+import { toast } from "react-toastify";
 
-export const LogInPage: FunctionComponent = () => {
-  const userId = useSelector(userIdSelector);
-  const userRole = useSelector(roleSelector);
-
-  const dispatch = useDispatch();
+export const SignUp: FunctionComponent = () => {
+  const location = useLocation();
   const navigate = useNavigate();
+  const role = location.state.role;
 
   return (
     <Container fluid>
@@ -22,15 +19,17 @@ export const LogInPage: FunctionComponent = () => {
           initialValues={{
             name: "",
             password: "",
+            email: "",
+            role: role,
           }}
-          validationSchema={loginValidation}
-          onSubmit={(values) => {
-            dispatch(login(values));
-            if (userRole === "MODEL") {
-              navigate(`/modelRoom/${userId}`);
-            } else {
-              navigate("/");
-            }
+          validationSchema={registrationValidation}
+          onSubmit={async (values) => {
+            await signUpUser(values).then((response) => {
+              if (response.data.message === "user registered successfully") {
+                navigate("/logInPage");
+                toast(response.data.message);
+              }
+            });
           }}
         >
           {({ errors, touched }) => (
@@ -56,12 +55,22 @@ export const LogInPage: FunctionComponent = () => {
                 {touched.password && errors.password && (
                   <h6 className="text-danger">{errors.password}</h6>
                 )}
+                <Field
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Email Address"
+                  className="mt-4"
+                />
+                {touched.email && errors.email && (
+                  <h6 className="text-danger">{errors.email}</h6>
+                )}
                 <Button
                   type="submit"
                   variant="secondary"
                   className="col-4 offset-4 mt-3 mb-5"
                 >
-                  Log In
+                  Sign Up {role}
                 </Button>
               </Form>
             </>

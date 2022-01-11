@@ -1,48 +1,30 @@
-import axios from "axios";
-import { FunctionComponent, useState } from "react";
+import { IUser } from "interfaces/user";
+import { FunctionComponent } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-interface IMockModels {
-  id: string;
-  name: string;
-  age: string;
-  role: string;
-  video: string;
-}
-
 interface IModelCardProps {
-  item: IMockModels;
+  model: IUser;
 }
 
-export const ModelCard: FunctionComponent<IModelCardProps> = ({ item }) => {
+export const ModelCard: FunctionComponent<IModelCardProps> = ({ model }) => {
   const navigate = useNavigate();
-  const [roomId] = useState("");
-  const [userName] = useState("");
 
-  const pushToModelRoom = () => {
-    axios.post("http://localhost:9999/rooms", {
-      roomId,
-      userName,
-    });
-    navigate(`/modelRoom/${item.id}`);
+  const pushToModelRoom = async () => {
+    navigate(`/modelRoom/${model.userId}`);
   };
 
   return (
-    <div className="col-md-6 col-lg-4 p-1 col-sm-12">
-      <Card>
+    <div className="col-xl-3 col-lg-4 col-md-6 col-12 p-1">
+      <Card className="shadow">
         <Button variant="light" onClick={pushToModelRoom}>
           <Card.Body>
             <Card.Title>
-              <div className="ratio ratio-16x9">
-                <iframe
-                  src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
-                  title="YouTube video"
-                  allowFullScreen
-                ></iframe>
+              <div>
+                <img alt="/" src="https://via.placeholder.com/150"></img>
               </div>
             </Card.Title>
-            <Card.Text>{item.name}</Card.Text>
+            <Card.Text>{model.userName}</Card.Text>
           </Card.Body>
         </Button>
       </Card>

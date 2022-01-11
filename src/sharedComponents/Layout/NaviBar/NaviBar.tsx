@@ -1,15 +1,24 @@
 import { FunctionComponent } from "react";
-import { Navbar, Nav, Button } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { userIdSelector, userNameSelector } from "store/selectors/auth";
+import { SearchModels } from "sharedComponents/SearchModels";
+import {
+  tokenSelector,
+  userNameSelector,
+  userTokensSelector,
+} from "store/selectors/auth";
 import { logOut } from "store/slices/auth";
+import { NavBarLink } from "./NavBarLink";
+import { SignUpList } from "./SignUpList";
 
 export const NaviBar: FunctionComponent = () => {
   const dispatch = useDispatch();
-  const isLogin = useSelector(userIdSelector);
-  const userName = useSelector(userNameSelector);
   const navigate = useNavigate();
+
+  const userName = useSelector(userNameSelector);
+  const userTokens = useSelector(userTokensSelector);
+  const token = useSelector(tokenSelector);
 
   const sigOut = () => {
     dispatch(logOut());
@@ -31,83 +40,44 @@ export const NaviBar: FunctionComponent = () => {
           className="justify-content-between"
         >
           <Nav className="mr-auto">
-            <Nav.Link>
-              <Button
-                variant="outline-light"
-                className="mr-1"
+            <NavBarLink
+              text="Web Cam Logo"
+              onClick={() => {
+                navigate("/");
+              }}
+            />
+            {token ? (
+              <NavBarLink
+                text="My profile"
                 onClick={() => {
-                  navigate("/");
+                  navigate("/myProfile");
                 }}
-              >
-                Web Cam Logo
-              </Button>
-            </Nav.Link>
-            {isLogin ? (
-              <Nav.Link>
-                <Button
-                  variant="outline-light"
-                  className="mr-1"
-                  onClick={() => {
-                    navigate("/myProfile");
-                  }}
-                >
-                  My profile
-                </Button>
-              </Nav.Link>
+              />
             ) : (
               ""
             )}
-
             <Nav.Link>
-              <div className="input-group input-group-sm p-1">
-                <input
-                  type="text"
-                  className="form-control"
-                  aria-label="Small"
-                  aria-describedby="inputGroup-sizing-sm"
-                  placeholder="Search model"
-                />
-              </div>
+              <SearchModels />
             </Nav.Link>
           </Nav>
           <Nav>
-            {!isLogin ? (
+            {!token ? (
               <>
-                <Nav.Link>
-                  <Button
-                    variant="outline-light"
-                    className="mr-1"
-                    onClick={() => {
-                      navigate("/logInPage");
-                    }}
-                  >
-                    Log In
-                  </Button>
-                </Nav.Link>
-                <Nav.Link>
-                  <Button
-                    variant="outline-light"
-                    className="mr-1 color-white"
-                    onClick={() => {
-                      navigate("/register");
-                    }}
-                  >
-                    Register
-                  </Button>
-                </Nav.Link>
+                <NavBarLink
+                  text="Log In"
+                  onClick={() => {
+                    navigate("/logInPage");
+                  }}
+                />
+                <SignUpList />
               </>
             ) : (
               <>
-                <h5 className="mt-3 text-white pr-5">Hello "{userName}"</h5>
-                <Nav.Link>
-                  <Button
-                    variant="outline-light"
-                    className="mr-1"
-                    onClick={sigOut}
-                  >
-                    Log Out
-                  </Button>
-                </Nav.Link>
+                <h5 className="mt-3 text-white pr-5">
+                  "<strong>{userName}</strong>", you have{" "}
+                  <strong>{userTokens}</strong> tokens
+                </h5>
+                <NavBarLink text="Log Out" onClick={sigOut} />
               </>
             )}
           </Nav>

@@ -1,0 +1,1 @@
+export { messagesBlock } from './MessagesBlock';

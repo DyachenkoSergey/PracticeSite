@@ -1,11 +1,11 @@
 export const SERVER_PATHS = {
   modelRoom: "/modelRoom",
   modelProfile: "/modelProfile",
-  topModels: "/topModels",
+  topModels: "/models/topModels",
   logOut: "/logOut",
-  register: "/register",
-  modelsList: "/modelsList",
+  signUp: "/auth/registration",
+  login: "/auth/login",
+  modelsList: "/models/modelsList",
   usersList: "/usersList",
-  user: "/user",
 };
 export const server = "http://localhost:9999";
