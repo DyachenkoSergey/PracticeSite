@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SearchModels } from "sharedComponents/SearchModels";
 import {
+  roleSelector,
   tokenSelector,
+  userIdSelector,
   userNameSelector,
   userTokensSelector,
 } from "store/selectors/auth";
@@ -18,6 +20,8 @@ export const NaviBar: FunctionComponent = () => {
 
   const userName = useSelector(userNameSelector);
   const userTokens = useSelector(userTokensSelector);
+  const userRole = useSelector(roleSelector);
+  const userId = useSelector(userIdSelector);
   const token = useSelector(tokenSelector);
 
   const sigOut = () => {
@@ -47,12 +51,24 @@ export const NaviBar: FunctionComponent = () => {
               }}
             />
             {token ? (
-              <NavBarLink
-                text="My profile"
-                onClick={() => {
-                  navigate("/myProfile");
-                }}
-              />
+              <>
+                <NavBarLink
+                  text="My profile"
+                  onClick={() => {
+                    navigate("/myProfile");
+                  }}
+                />
+                {userRole === "MODEL" ? (
+                  <>
+                    <NavBarLink
+                      text="My room"
+                      onClick={() => {
+                        navigate(`/modelRoom/${userId}`);
+                      }}
+                    />
+                  </>
+                ) : null}
+              </>
             ) : (
               ""
             )}

@@ -97,6 +97,7 @@ export const ChatModelRoom: FunctionComponent<IChatProps> = ({
                 <div>
                   <textarea
                     className="w-100 p-2 focus-none"
+                    style={{ resize: "none" }}
                     placeholder="Message"
                     value={messageValue}
                     onChange={(e) => setMessageValue(e.target.value)}

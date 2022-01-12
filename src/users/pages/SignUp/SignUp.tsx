@@ -25,7 +25,7 @@ export const SignUp: FunctionComponent = () => {
           validationSchema={registrationValidation}
           onSubmit={async (values) => {
             await signUpUser(values).then((response) => {
-              if (response.data.message === "user registered successfully") {
+              if (response?.data?.message) {
                 navigate("/logInPage");
                 toast(response.data.message);
               }

@@ -1,18 +1,32 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { Field, Formik, Form } from "formik";
 import { Button, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { login } from "../../../store/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { userIdSelector, roleSelector } from "store/selectors/auth";
+import {
+  userIdSelector,
+  roleSelector,
+  tokenSelector,
+} from "store/selectors/auth";
 import { loginValidation } from "utils/validation";
 
 export const LogInPage: FunctionComponent = () => {
   const userId = useSelector(userIdSelector);
   const userRole = useSelector(roleSelector);
+  const token = useSelector(tokenSelector);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userRole === "MODEL" && token) {
+      navigate(`/modelRoom/${userId}`);
+    }
+    if (userRole === "USER" && token) {
+      navigate("/");
+    }
+  }, [navigate, token, userId, userRole]);
 
   return (
     <Container fluid>
@@ -26,11 +40,6 @@ export const LogInPage: FunctionComponent = () => {
           validationSchema={loginValidation}
           onSubmit={(values) => {
             dispatch(login(values));
-            if (userRole === "MODEL") {
-              navigate(`/modelRoom/${userId}`);
-            } else {
-              navigate("/");
-            }
           }}
         >
           {({ errors, touched }) => (

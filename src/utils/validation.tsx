@@ -7,7 +7,7 @@ export const registrationValidation = yup.object({
     .required("Password is required")
     .matches(
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{4,}$/,
-      "Password should be at least 4 symbols, contain at least 1 lowercase letter, 1 uppercase letter, 1 number and 1 special character"
+      "Password should be at least 4 symbols, contain at least 1 lowercase letter, 1 uppercase letter"
     ),
   email: yup
     .string()
