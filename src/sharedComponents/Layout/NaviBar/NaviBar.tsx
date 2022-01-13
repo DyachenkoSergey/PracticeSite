@@ -17,6 +17,14 @@ import { SignUpList } from "./SignUpList";
 export const NaviBar: FunctionComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // const location = useLocation();
+
+  // const [modelRoomRoute, setModelRoomRoute] = useState(false);
+
+  // if (location.pathname === "/modelRoom/:id") {
+  //   setModelRoomRoute(true);
+  // }
+  // console.log(modelRoomRoute);
 
   const userName = useSelector(userNameSelector);
   const userTokens = useSelector(userTokensSelector);

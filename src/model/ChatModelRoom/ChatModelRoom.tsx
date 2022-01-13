@@ -24,13 +24,21 @@ export const ChatModelRoom: FunctionComponent<IChatProps> = ({
   const messagesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let isMounted = true;
     socket.on("ROOM:SET_USERS", (users: []) => {
       const usersInRoom = Object.values(users);
-      setUsersList(usersInRoom);
+      if (isMounted) {
+        setUsersList(usersInRoom);
+      }
     });
     socket.on("ROOM:SET_MESSAGES", (messages: any) => {
-      setMessagesList(messages);
+      if (isMounted) {
+        setMessagesList(messages);
+      }
     });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -41,7 +49,7 @@ export const ChatModelRoom: FunctionComponent<IChatProps> = ({
 
   const userBlock = usersList.map((item, index) => (
     <li
-      className="list-group-item d-flex"
+      className="list-group-item d-flex bg-transparent"
       key={index}
       style={{ height: "30px", overflow: "hidden", padding: "5px 0" }}
     >

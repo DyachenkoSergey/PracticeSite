@@ -1,4 +1,5 @@
 export const SERVER_PATHS = {
+  oneModel: "/models/model",
   modelRoom: "/modelRoom",
   modelProfile: "/modelProfile",
   topModels: "/models/topModels",

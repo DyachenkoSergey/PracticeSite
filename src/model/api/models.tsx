@@ -20,6 +20,23 @@ export const getAllModels = async (values: string): Promise<IUser[]> => {
   }
 };
 
+export const getModel = async (modelId: string): Promise<IUser[]> => {
+  try {
+    const response = await axios.post(
+      `${server}${SERVER_PATHS.oneModel}`,
+      {
+        modelId,
+      },
+      {
+        withCredentials: false,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error();
+  }
+};
+
 export const getTopModels = async (): Promise<IUser[]> => {
   try {
     const response = await axios.get(`${server}${SERVER_PATHS.topModels}`, {

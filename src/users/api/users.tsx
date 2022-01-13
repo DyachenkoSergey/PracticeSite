@@ -20,6 +20,22 @@ export const loginUser = async (values: IUserParams): Promise<any> => {
   }
 };
 
+// export const logoutUser = async (userId: string): Promise<any> => {
+//   try {
+//     const { data } = await axios.post(
+//       `${server}${SERVER_PATHS.logOut}`,
+//       {
+//         userId,
+//       },
+//       { withCredentials: false }
+//     );
+//     return data;
+//   } catch (error: any) {
+//     const message = error.response.data.message || "Something went wrong";
+//     toast(message);
+//   }
+// };
+
 export const signUpUser = async (values: IUserParams): Promise<any> => {
   try {
     const data = await axios.post(
