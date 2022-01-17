@@ -7,7 +7,7 @@ export const SignUpModel: FunctionComponent = () => {
   const userId = useSelector(userIdSelector);
   return (
     <div>
-      <SignUp modelRole="model" studioId={userId} />
+      <SignUp modelRole="MODEL" studioId={userId} />
     </div>
   );
 };

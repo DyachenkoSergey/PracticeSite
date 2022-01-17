@@ -3,6 +3,7 @@ export interface IUserParams {
   password?: string;
   email?: string;
   role?: string;
+  studioId?: string;
 }
 
 export interface IUser {

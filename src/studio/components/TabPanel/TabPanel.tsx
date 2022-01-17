@@ -7,10 +7,11 @@ export const TabPanel: FunctionComponent = () => {
   return (
     <Container>
       <Tab.Container id="left-tabs-example" defaultActiveKey="StudioModels">
-        <Row>
+        <Row className="justify-content-center">
           <Col sm={3}>
             <div>
-              <Nav variant="pills" className="flex-column">
+              {/* <Nav variant="pills" className="flex-column"> */}
+              <Nav className="flex-column red" variant="pills">
                 <Nav.Item>
                   <Nav.Link
                     eventKey="StudioModels"
