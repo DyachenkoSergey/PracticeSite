@@ -2,14 +2,24 @@ import { FunctionComponent } from "react";
 import { Formik, Form, Field } from "formik";
 import { Button, Container, Row } from "react-bootstrap";
 import { signUpUser } from "users/api/users";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { registrationValidation } from "../../../utils/validation";
 import { toast } from "react-toastify";
 
-export const SignUp: FunctionComponent = () => {
+interface ISignUpProps {
+  modelRole?: string;
+  studioId?: string;
+}
+
+export const SignUp: FunctionComponent<ISignUpProps> = ({
+  modelRole,
+  studioId,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const role = location.state.role;
+
+  const role = location?.state?.role ? location.state.role : modelRole;
+  console.log(role);
 
   return (
     <Container fluid>
@@ -21,6 +31,7 @@ export const SignUp: FunctionComponent = () => {
             password: "",
             email: "",
             role: role,
+            studioId: studioId || "",
           }}
           validationSchema={registrationValidation}
           onSubmit={async (values) => {

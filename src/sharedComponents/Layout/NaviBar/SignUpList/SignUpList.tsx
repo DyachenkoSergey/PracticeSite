@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { Dropdown } from "react-bootstrap";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export const SignUpList: FunctionComponent = () => {
   const navigate = useNavigate();

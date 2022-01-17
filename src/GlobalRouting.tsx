@@ -1,15 +1,17 @@
-import { AdminRoutes } from "admin/routes";
 import { ModelProfile } from "model/ModelProfile";
 import { ModelRoom } from "model/ModelRoom";
-import { ModelRoutes } from "model/routing";
 import { FunctionComponent } from "react";
-import { Route, Routes } from "react-router";
+import { Route, Routes } from "react-router-dom";
 import { NotFoundPage } from "sharedComponents/NotFoundPage";
+import { TabPanel } from "studio/components/TabPanel";
 import { LogInPage } from "users/pages/LogInPage";
 import { MainPage } from "users/pages/MainPage";
 import { SignUp } from "users/pages/SignUp";
 import { UserProfile } from "users/pages/UserProfile";
-import { UserRoutes } from "users/routing";
+// import { UserRoutes } from "users/routing";
+// import { ModelRoutes } from "model/routing";
+// import { AdminRoutes } from "admin/routes";
+// import { StudioRoutes } from "studio/routing";
 
 export const GlobalRouting: FunctionComponent = () => {
   return (
@@ -21,9 +23,11 @@ export const GlobalRouting: FunctionComponent = () => {
         <Route path="/modelProfile/:id" element={<ModelProfile />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/myProfile" element={<UserProfile />} />
-        <Route element={<UserRoutes />} />
-        <Route element={<ModelRoutes />} />
-        <Route element={<AdminRoutes />} />
+        <Route path="studio/:id" element={<TabPanel />} />
+        {/* <StudioRoutes /> */}
+        {/* <UserRoutes />
+        <ModelRoutes />
+        <AdminRoutes /> */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>

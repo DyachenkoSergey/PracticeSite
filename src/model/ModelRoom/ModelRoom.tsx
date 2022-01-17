@@ -4,8 +4,7 @@ import { ModelBlock } from "model/ModelBlock";
 import { FunctionComponent, useEffect, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import {
   roleSelector,
   userIdSelector,
@@ -27,35 +26,14 @@ export const ModelRoom: FunctionComponent = () => {
   const [isMyRoom, setIsMyRoom] = useState(false);
   const [modelName, setModelName] = useState("");
 
-  window.addEventListener(
-    "beforeunload",
-    function (e) {
-      socket.emit("ROOM:LEAVE", {
-        roomId: params.id,
-        userName: userName,
-      });
-    },
-    false
-  );
-
-  window.onpopstate = () => {
-    socket.emit("ROOM:LEAVE", {
-      roomId: params.id,
-      userName: userName,
-    });
-  };
-
   useEffect(() => {
     if (params.id) {
       dispatch(getOneModel(params.id));
-    }
-  }, [dispatch, params.id]);
-
-  useEffect(() => {
-    if (userId === params.id) {
-      setIsMyRoom(true);
-    } else {
-      setIsMyRoom(false);
+      if (userId === params.id) {
+        setIsMyRoom(true);
+      } else {
+        setIsMyRoom(false);
+      }
     }
     setModelName(model.userName);
     socket.emit("ROOM:JOIN", {
@@ -68,7 +46,7 @@ export const ModelRoom: FunctionComponent = () => {
         userName: userName,
       });
     };
-  }, [params.id, userId, userName, location.pathname, model.userName]);
+  }, [dispatch, model.userName, params.id, userId, userName, location.search]);
 
   return (
     <>
@@ -76,7 +54,7 @@ export const ModelRoom: FunctionComponent = () => {
         <Row>
           <div className="col-12">
             <h4 className="text-secondary">
-              Welcome to <strong>{modelName}</strong> room
+              Welcome to <strong className="m-2"> {modelName} </strong> room
             </h4>
             <Row>
               <div className="col-md-7 col-sm-12 pr-2">

@@ -1,15 +1,15 @@
 import { FunctionComponent, useEffect } from "react";
 import { Field, Formik, Form } from "formik";
 import { Button, Container, Row } from "react-bootstrap";
-import { useNavigate } from "react-router";
-import { login } from "../../../store/slices/auth";
+import { useNavigate } from "react-router-dom";
+import { logIn } from "../../../store/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
 import {
   userIdSelector,
   roleSelector,
   tokenSelector,
 } from "store/selectors/auth";
-import { loginValidation } from "utils/validation";
+import { logInValidation } from "utils/validation";
 
 export const LogInPage: FunctionComponent = () => {
   const userId = useSelector(userIdSelector);
@@ -26,6 +26,9 @@ export const LogInPage: FunctionComponent = () => {
     if (userRole === "USER" && token) {
       navigate("/");
     }
+    if (userRole === "STUDIO" && token) {
+      navigate(`/studio/${userId}`);
+    }
   }, [navigate, token, userId, userRole]);
 
   return (
@@ -37,9 +40,9 @@ export const LogInPage: FunctionComponent = () => {
             name: "",
             password: "",
           }}
-          validationSchema={loginValidation}
+          validationSchema={logInValidation}
           onSubmit={(values) => {
-            dispatch(login(values));
+            dispatch(logIn(values));
           }}
         >
           {({ errors, touched }) => (

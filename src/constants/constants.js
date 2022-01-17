@@ -3,9 +3,9 @@ export const SERVER_PATHS = {
   modelRoom: "/modelRoom",
   modelProfile: "/modelProfile",
   topModels: "/models/topModels",
-  logOut: "/logOut",
+  logOut: "/auth/logOut",
   signUp: "/auth/registration",
-  login: "/auth/login",
+  logIn: "/auth/logIn",
   modelsList: "/models/modelsList",
   usersList: "/usersList",
 };

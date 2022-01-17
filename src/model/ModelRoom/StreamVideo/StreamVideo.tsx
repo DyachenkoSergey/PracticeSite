@@ -17,8 +17,8 @@ export const StreamVideo: FunctionComponent = () => {
           };
         }
       })
-      .catch((err) => {
-        console.log(err.name + ": " + err.message);
+      .catch((error) => {
+        console.log(error.name + ": " + error.message);
       });
   };
   return (

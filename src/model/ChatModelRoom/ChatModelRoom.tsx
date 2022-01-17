@@ -1,6 +1,9 @@
 import { socket } from "constants/socket";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
 import { Button, Card, Container, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { tokenSelector } from "store/selectors/auth";
 import { messagesBlock } from "./MessagesBlock";
 
 interface IChatProps {
@@ -21,7 +24,10 @@ export const ChatModelRoom: FunctionComponent<IChatProps> = ({
   const [usersList, setUsersList] = useState([]);
   const [messagesList, setMessagesList] = useState<IMessageList[] | null>(null);
   const [messageValue, setMessageValue] = useState("");
+
   const messagesRef = useRef<HTMLDivElement>(null);
+
+  const token = useSelector(tokenSelector);
 
   useEffect(() => {
     let isMounted = true;
@@ -58,12 +64,16 @@ export const ChatModelRoom: FunctionComponent<IChatProps> = ({
   ));
 
   const sendMessage = () => {
-    socket.emit("ROOM:NEW_MESSAGE", {
-      roomId,
-      userName,
-      text: messageValue,
-    });
-    setMessageValue("");
+    if (!token) {
+      toast("unregistered users cannot chat");
+    } else {
+      socket.emit("ROOM:NEW_MESSAGE", {
+        roomId,
+        userName,
+        text: messageValue,
+      });
+      setMessageValue("");
+    }
   };
 
   return (
@@ -72,49 +82,45 @@ export const ChatModelRoom: FunctionComponent<IChatProps> = ({
         <Card className="col-12 d-flex" style={{ height: "500px" }}>
           <Card.Body>
             <Row>
-              <div
-                className="col-md-4 bg-light"
-                style={{ height: "465px", overflow: "auto" }}
-              >
+              <div className="col-md-4 bg-light" style={{ overflow: "auto" }}>
                 <Card.Text>OnLine ({userBlock.length}):</Card.Text>
                 <ul className="list-group list-group-flush list-unstyled text-left">
                   {userBlock}
                 </ul>
               </div>
 
-              <div
-                className="col-md-8"
-                style={{
-                  textAlign: "left",
-                  height: "450px",
-                }}
-              >
+              <div className="col-md-8 text-left">
                 <div
                   ref={messagesRef}
                   style={{
                     textAlign: "left",
                     overflow: "auto",
-                    height: "320px",
+                    height: "370px",
                   }}
                 >
                   <ul className="list-group list-unstyled">
                     {messagesBlock({ messagesList, userName })}
                   </ul>
                 </div>
-                <hr />
-                <div>
+              </div>
+              <hr className="m-2" />
+              <div className="col-md-12" style={{ height: "20%" }}>
+                <h6 style={{ textAlign: "center" }}>
+                  unregistered users cannot chat
+                </h6>
+                <div className="d-flex">
                   <textarea
-                    className="w-100 p-2 focus-none"
-                    style={{ resize: "none" }}
+                    className="w-100 p-1 focus-none"
+                    style={{
+                      resize: "none",
+                      height: "38px",
+                      marginRight: "5px",
+                    }}
                     placeholder="Message"
                     value={messageValue}
                     onChange={(e) => setMessageValue(e.target.value)}
                   ></textarea>
-                  <Button
-                    variant="primary"
-                    onClick={sendMessage}
-                    className="text-left"
-                  >
+                  <Button variant="primary" onClick={sendMessage}>
                     Send
                   </Button>
                 </div>
