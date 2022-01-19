@@ -89,10 +89,24 @@ export const NaviBar: FunctionComponent = () => {
               </>
             ) : (
               <>
-                <h5 className="mt-3 text-white pr-5">
-                  "<strong>{userName}</strong>", you have{" "}
-                  <strong>{userTokens}</strong> tokens
-                </h5>
+                {userRole === "STUDIO" ? (
+                  <>
+                    <h5 className="mt-3 text-white pr-5">
+                      "<strong>{userName}</strong>"
+                    </h5>
+                    <NavBarLink
+                      text="Studio control panel"
+                      onClick={() => {
+                        navigate(`/studio/${userId}`);
+                      }}
+                    />
+                  </>
+                ) : (
+                  <h5 className="mt-3 text-white pr-5">
+                    "<strong>{userName}</strong>", you have{" "}
+                    <strong>{userTokens}</strong> tokens
+                  </h5>
+                )}
                 <NavBarLink text="Log Out" onClick={sigOut} />
               </>
             )}

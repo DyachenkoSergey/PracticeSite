@@ -7,7 +7,7 @@ export const StudioModels: FunctionComponent = () => {
     <Container>
       <Row className="justify-content-center">
         <div className="col-12">
-          <h3 className="mb-3">All models</h3>
+          <h3 className="mb-3 d-none d-sm-block">All models</h3>
           <StudioTable />
         </div>
       </Row>

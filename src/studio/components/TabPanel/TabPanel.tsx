@@ -1,5 +1,7 @@
+import "./styles.css";
+
 import { FunctionComponent } from "react";
-import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
+import { Col, Container, Row, Nav, Tab } from "react-bootstrap";
 import { SignUpModel } from "../Tabs/SignUp";
 import { StudioModels } from "../Tabs/StudioModels/StudioModels";
 
@@ -10,7 +12,6 @@ export const TabPanel: FunctionComponent = () => {
         <Row className="justify-content-center">
           <Col sm={3}>
             <div>
-              {/* <Nav variant="pills" className="flex-column"> */}
               <Nav className="flex-column red" variant="pills">
                 <Nav.Item>
                   <Nav.Link
@@ -33,7 +34,7 @@ export const TabPanel: FunctionComponent = () => {
           </Col>
           <Col sm={9}>
             <div>
-              <Tab.Content>
+              <Tab.Content className="border">
                 <Tab.Pane eventKey="StudioModels">
                   <StudioModels />
                 </Tab.Pane>

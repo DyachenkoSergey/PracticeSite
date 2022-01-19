@@ -21,7 +21,11 @@ export const ModelCard: FunctionComponent<IModelCardProps> = ({ model }) => {
           <Card.Body>
             <Card.Title>
               <div>
-                <img alt="/" src="https://via.placeholder.com/150"></img>
+                <img
+                  alt="/"
+                  src="https://via.placeholder.com/150"
+                  className="img-fluid w-100 h-auto"
+                ></img>
               </div>
             </Card.Title>
             <Card.Text>{model.userName}</Card.Text>

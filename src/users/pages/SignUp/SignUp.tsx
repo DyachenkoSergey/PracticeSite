@@ -19,15 +19,10 @@ export const SignUp: FunctionComponent<ISignUpProps> = ({
   const navigate = useNavigate();
 
   const role = location?.state?.role ? location.state.role : modelRole;
-  console.log(studioId);
 
   return (
     <Container fluid>
       <Row className="justify-content-center">
-        {/* <div className="col-md-4 col-sm-3"></div> */}
-        {/* <div
-          className={studioId ? "col-lg-3 col-md-0" : "col-md-4 col-sm-3"}
-        ></div> */}
         <Formik
           initialValues={{
             name: "",
@@ -48,7 +43,6 @@ export const SignUp: FunctionComponent<ISignUpProps> = ({
         >
           {({ errors, touched }) => (
             <>
-              {/* <Form className="d-grid col-md-4 col-sm-6 pt-5"> */}
               <Form
                 className={
                   studioId
@@ -90,7 +84,6 @@ export const SignUp: FunctionComponent<ISignUpProps> = ({
                   <Button
                     type="submit"
                     variant="secondary"
-                    // className="col-4 mt-3 mb-5"
                     className={
                       studioId
                         ? "col-md-6 col-8 mt-3 mb-5"

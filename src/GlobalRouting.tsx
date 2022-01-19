@@ -3,7 +3,7 @@ import { ModelRoom } from "model/ModelRoom";
 import { FunctionComponent } from "react";
 import { Route, Routes } from "react-router-dom";
 import { NotFoundPage } from "sharedComponents/NotFoundPage";
-import { TabPanel } from "studio/components/TabPanel";
+import { TabPanel } from "studio/components/TabPanel/TabPanel";
 import { LogInPage } from "users/pages/LogInPage";
 import { MainPage } from "users/pages/MainPage";
 import { SignUp } from "users/pages/SignUp";

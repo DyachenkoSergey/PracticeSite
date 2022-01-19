@@ -20,7 +20,7 @@ export const getAllModels = async (values: string): Promise<IUser[]> => {
   }
 };
 
-export const getModel = async (modelId: string): Promise<IUser[]> => {
+export const getModel = async (modelId: string): Promise<IUser> => {
   try {
     const response = await axios.post(
       `${server}${SERVER_PATHS.oneModel}`,
