@@ -18,12 +18,11 @@ export const SignUpList: FunctionComponent = () => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu
-        className="dropdown-menu-end bg-secondary shadow"
+        className="dropdown-menu-end shadow"
         style={{ marginRight: "30px" }}
       >
         {linksList.map((item) => (
           <Dropdown.Item
-            className="border-bottom"
             key={item}
             onClick={() => {
               navigate("/signUp", { state: { role: item } });

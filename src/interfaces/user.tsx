@@ -12,6 +12,7 @@ export interface IUser {
   userEmail: string;
   userTokens: number;
   userRole: string;
+  userProfile?: any;
   userModels?: Array<string>;
   token?: string;
 }

@@ -11,7 +11,7 @@ export const Footer: FunctionComponent = () => {
       bg="secondary"
       variant="dark"
       className="p-1"
-      fixed="bottom"
+      // fixed="bottom"
     >
       <Navbar.Toggle aria-controls="responsive-navbar-footer" />
       <Navbar.Collapse

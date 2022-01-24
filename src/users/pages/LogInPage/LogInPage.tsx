@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect } from "react";
 import { Field, Formik, Form } from "formik";
 import { Button, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { logIn } from "../../../store/slices/auth";
+import { logIn } from "store/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
 import {
   userIdSelector,
@@ -32,7 +32,7 @@ export const LogInPage: FunctionComponent = () => {
   }, [navigate, token, userId, userRole]);
 
   return (
-    <Container fluid>
+    <Container fluid style={{minHeight: "80vh"}}>
       <Row>
         <div className="col-md-4 col-sm-3"></div>
         <Formik

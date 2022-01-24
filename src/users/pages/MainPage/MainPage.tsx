@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ModelCard } from "model/ModelCart";
+import { ModelCard } from "model/components/ModelCart";
 import { FunctionComponent, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
-import { Aside } from "../../components/Aside";
+import { Aside } from "users/components/Aside";
 import { useDispatch, useSelector } from "react-redux";
 import { modelsSelector, searchModelsSelector } from "store/selectors/models";
 import { getModels } from "store/slices/models";
@@ -24,7 +24,7 @@ export const MainPage: FunctionComponent = () => {
   return (
     <>
       {modelsList ? (
-        <Container fluid>
+        <Container fluid style={{ minHeight: "80vh" }}>
           <Row>
             <div className="col-12 p-4">
               <Row>

@@ -1,6 +1,6 @@
 import { IUser } from "interfaces/user";
 import { FunctionComponent, useEffect, useState } from "react";
-import { getTopModels } from "../../../model/api/models";
+import { getTopModels } from "model/api/models";
 import { TopModels } from "./TopModels";
 
 export const Aside: FunctionComponent = () => {

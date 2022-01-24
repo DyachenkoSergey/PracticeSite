@@ -1,4 +1,4 @@
-import { StreamVideo } from "model/ModelRoom/StreamVideo";
+import { StreamVideo } from "../ModelRoom/StreamVideo";
 import { FunctionComponent } from "react";
 import { Card } from "react-bootstrap";
 

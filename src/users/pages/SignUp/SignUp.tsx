@@ -3,7 +3,7 @@ import { Formik, Form, Field } from "formik";
 import { Button, Container, Row } from "react-bootstrap";
 import { signUpUser } from "users/api/users";
 import { useLocation, useNavigate } from "react-router-dom";
-import { registrationValidation } from "../../../utils/validation";
+import { registrationValidation } from "utils/validation";
 import { toast } from "react-toastify";
 
 interface ISignUpProps {
@@ -21,7 +21,7 @@ export const SignUp: FunctionComponent<ISignUpProps> = ({
   const role = location?.state?.role ? location.state.role : modelRole;
 
   return (
-    <Container fluid>
+    <Container fluid style={{ minHeight: "80vh" }}>
       <Row className="justify-content-center">
         <Formik
           initialValues={{
