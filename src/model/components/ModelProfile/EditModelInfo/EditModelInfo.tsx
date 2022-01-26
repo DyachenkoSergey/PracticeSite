@@ -1,6 +1,9 @@
 import { useFormik } from "formik";
-import { editModelProfile, getModelProfile } from "model/api/models";
-// import countries from "i18n-iso-countries";
+import {
+  editModelProfile,
+  getModelProfile,
+  IModelEditProfile,
+} from "model/api/models";
 import { FunctionComponent, useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import {
@@ -10,7 +13,6 @@ import {
   FormControl,
   FormGroup,
   FormLabel,
-  FormSelect,
   Row,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
@@ -28,67 +30,38 @@ import {
   hairOptions,
   sexualPreferenceOptions,
 } from "./options";
-
-// countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
-
-interface IModelEditProfile {
-  aboutMe?: string;
-  age?: string;
-  country?: string;
-  languages?: any;
-  birthday?: string;
-  gender?: string;
-  sexualPreference?: string;
-  ethnicity?: string;
-  eyes?: string;
-  hair?: string;
-  bodyType?: string;
-}
+import { FormControlSelect } from "./FormControlSelect";
 
 export const EditModelInfo: FunctionComponent = () => {
   const modelId = useSelector(userIdSelector);
   const navigate = useNavigate();
 
-  // const countryObj = countries.getNames("en", { select: "official" });
-  // const countryArr = Object.entries(countryObj).map(([key, value]) => {
-  //   return {
-  //     label: value,
-  //     value: key,
-  //   };
-  // });
-
-  const [selected, setSelected] = useState([]);
   const [modelInfo, setModelInfo] = useState<IModelEditProfile>();
+  const [selected, setSelected] = useState<Array<HTMLOptionElement>>([]);
 
   useEffect(() => {
     getModelProfile(modelId).then((data) => {
       if (data) {
-        setSelected(data[0].languages);
+        data[0]?.languages ? setSelected(data[0].languages) : setSelected([]);
         setModelInfo(data[0]);
       }
     });
   }, [modelId]);
 
-  // const countryOption = countryArr.map(({ label, value }) => (
-  //   <option key={value} value={label}>
-  //     {label}
-  //   </option>
-  // ));
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      aboutMe: modelInfo?.aboutMe,
-      age: modelInfo?.age,
-      country: modelInfo?.country,
+      aboutMe: modelInfo?.aboutMe || "",
+      age: modelInfo?.age || "",
+      country: modelInfo?.country || "",
       languages: modelInfo?.languages || Option,
-      birthday: modelInfo?.birthday,
-      gender: modelInfo?.gender,
-      sexualPreference: modelInfo?.sexualPreference,
-      ethnicity: modelInfo?.ethnicity,
-      eyes: modelInfo?.eyes,
-      hair: modelInfo?.hair,
-      bodyType: modelInfo?.bodyType,
+      birthday: modelInfo?.birthday || "",
+      gender: modelInfo?.gender || "",
+      sexualPreference: modelInfo?.sexualPreference || "",
+      ethnicity: modelInfo?.ethnicity || "",
+      eyes: modelInfo?.eyes || "",
+      hair: modelInfo?.hair || "",
+      bodyType: modelInfo?.bodyType || "",
     },
     // validationSchema: editPageFormValidation,
     onSubmit: (values: IModelEditProfile) => {
@@ -104,7 +77,7 @@ export const EditModelInfo: FunctionComponent = () => {
     <>
       <Container>
         <Row className="justify-content-center">
-          <div className="col-6">
+          <div className="col-12 col-lg-6">
             <h3>Edit profile</h3>
             <Form
               onSubmit={formik.handleSubmit}
@@ -116,6 +89,9 @@ export const EditModelInfo: FunctionComponent = () => {
                   <strong>About Me</strong>
                 </FormLabel>
                 <FormControl
+                  as="textarea"
+                  rows={5}
+                  style={{ resize: "none" }}
                   className="form-control"
                   id="aboutMe"
                   name="aboutMe"
@@ -124,41 +100,24 @@ export const EditModelInfo: FunctionComponent = () => {
                   value={formik.values.aboutMe}
                 />
               </FormGroup>
-              <FormGroup className="mb-3 form-group">
-                <FormLabel htmlFor="age">
-                  <strong>Age</strong>
-                </FormLabel>
-                <FormSelect
-                  className="form-control"
-                  id="age"
-                  name="age"
-                  onChange={formik.handleChange}
-                  value={formik.values.age}
-                >
-                  <option />
-                  {ageOption()}
-                </FormSelect>
-              </FormGroup>
-              <FormGroup className="mb-3 form-group">
-                <FormLabel htmlFor="country">
-                  <strong>Country</strong>
-                </FormLabel>
-                <FormSelect
-                  className="form-control"
-                  name="country"
-                  id="country"
-                  value={formik.values.country}
-                  onChange={formik.handleChange}
-                >
-                  <option />
-                  {countryOption}
-                </FormSelect>
-              </FormGroup>
+              <FormControlSelect
+                id="age"
+                labelName="Age"
+                onChange={formik.handleChange}
+                value={formik.values.age}
+                option={ageOption()}
+              />
+              <FormControlSelect
+                id="country"
+                labelName="country"
+                onChange={formik.handleChange}
+                value={formik.values.country}
+                option={countryOption}
+              />
               <FormGroup className="mb-3 form-group">
                 <FormLabel htmlFor="languages">
                   <strong>Languages</strong>
                 </FormLabel>
-
                 <MultiSelect
                   options={languagesList}
                   value={selected}
@@ -180,90 +139,48 @@ export const EditModelInfo: FunctionComponent = () => {
                   key="birthday"
                 />
               </FormGroup>
-              <FormGroup className="mb-3 form-group">
-                <FormLabel htmlFor="gender">
-                  <strong>Gender</strong>
-                </FormLabel>
-                <FormSelect
-                  className="form-control"
-                  name="gender"
-                  id="gender"
-                  value={formik.values.gender}
-                  onChange={formik.handleChange}
-                >
-                  {genderOptions()}
-                </FormSelect>
-              </FormGroup>
-              <FormGroup className="mb-3 form-group">
-                <FormLabel htmlFor="sexualPreference">
-                  <strong>Sexual Preference</strong>
-                </FormLabel>
-                <FormSelect
-                  className="form-control"
-                  name="sexualPreference"
-                  id="sexualPreference"
-                  value={formik.values.sexualPreference}
-                  onChange={formik.handleChange}
-                >
-                  {sexualPreferenceOptions()}
-                </FormSelect>
-              </FormGroup>
-              <FormGroup className="mb-3 form-group">
-                <FormLabel htmlFor="ethnicity">
-                  <strong>Ethnicity</strong>
-                </FormLabel>
-                <FormSelect
-                  className="form-control"
-                  name="ethnicity"
-                  id="ethnicity"
-                  value={formik.values.ethnicity}
-                  onChange={formik.handleChange}
-                >
-                  {ethnicityOptions()}
-                </FormSelect>
-              </FormGroup>
-              <FormGroup className="mb-3 form-group">
-                <FormLabel htmlFor="eyes">
-                  <strong>Eyes</strong>
-                </FormLabel>
-                <FormSelect
-                  className="form-control"
-                  name="eyes"
-                  id="eyes"
-                  value={formik.values.eyes}
-                  onChange={formik.handleChange}
-                >
-                  {eyesOptions()}
-                </FormSelect>
-              </FormGroup>
-              <FormGroup className="mb-3 form-group">
-                <FormLabel htmlFor="hair">
-                  <strong>Hair</strong>
-                </FormLabel>
-                <FormSelect
-                  className="form-control"
-                  name="hair"
-                  id="hair"
-                  value={formik.values.hair}
-                  onChange={formik.handleChange}
-                >
-                  {hairOptions()}
-                </FormSelect>
-              </FormGroup>
-              <FormGroup className="mb-3 form-group">
-                <FormLabel htmlFor="bodyType">
-                  <strong>Body Type</strong>
-                </FormLabel>
-                <FormSelect
-                  className="form-control"
-                  name="bodyType"
-                  id="bodyType"
-                  value={formik.values.bodyType}
-                  onChange={formik.handleChange}
-                >
-                  {bodyTypeOptions()}
-                </FormSelect>
-              </FormGroup>
+              <FormControlSelect
+                id="gender"
+                labelName="Gender"
+                onChange={formik.handleChange}
+                value={formik.values.gender}
+                option={genderOptions()}
+              />
+              <FormControlSelect
+                id="sexualPreference"
+                labelName="Sexual preference"
+                onChange={formik.handleChange}
+                value={formik.values.sexualPreference}
+                option={sexualPreferenceOptions()}
+              />
+              <FormControlSelect
+                id="ethnicity"
+                labelName="Ethnicity"
+                onChange={formik.handleChange}
+                value={formik.values.ethnicity}
+                option={ethnicityOptions()}
+              />
+              <FormControlSelect
+                id="eyes"
+                labelName="Eyes"
+                onChange={formik.handleChange}
+                value={formik.values.eyes}
+                option={eyesOptions()}
+              />
+              <FormControlSelect
+                id="hair"
+                labelName="Hair"
+                onChange={formik.handleChange}
+                value={formik.values.hair}
+                option={hairOptions()}
+              />
+              <FormControlSelect
+                id="bodyType"
+                labelName="Body type"
+                onChange={formik.handleChange}
+                value={formik.values.bodyType}
+                option={bodyTypeOptions()}
+              />
               <div className="text-center">
                 <Button
                   type="submit"

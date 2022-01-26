@@ -2,10 +2,9 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { roleSelector, userIdSelector } from "store/selectors/auth";
+import { userIdSelector } from "store/selectors/auth";
 
 export const StreamVideo: FunctionComponent = () => {
-  const userRole = useSelector(roleSelector);
   const params = useParams();
   const userId = useSelector(userIdSelector);
 
@@ -52,16 +51,19 @@ export const StreamVideo: FunctionComponent = () => {
       <br />
       <div>
         {isMyRoom ? (
-          <Button
-            variant="secondary"
-            // className="mt-1"
-            onClick={streamCamVideo}
-            // style={{ marginBottom: "80px" }}
-          >
-            Start broadcast
-          </Button>
-        ) : null}
-        {userRole === "USER" ? (
+          <div className="d-flex justify-content-center">
+            <Button
+              variant="secondary"
+              style={{ marginRight: "10px" }}
+              onClick={streamCamVideo}
+            >
+              Start broadcast
+            </Button>
+            <Button variant="secondary" style={{ marginRight: "10px" }}>
+              Pause
+            </Button>
+          </div>
+        ) : (
           <div className="d-flex justify-content-center">
             <Button variant="secondary" style={{ marginRight: "10px" }}>
               Private
@@ -70,7 +72,7 @@ export const StreamVideo: FunctionComponent = () => {
               Tip model
             </Button>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );

@@ -2,20 +2,21 @@ import { IModelProfile } from "interfaces/model";
 import { getModelProfile } from "model/api/models";
 import { FunctionComponent, useEffect, useState } from "react";
 import { Container, ListGroupItem, ListGroup, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { userIdSelector } from "store/selectors/auth";
+import { useParams } from "react-router";
 import { ListProfile } from "../shared/ListProfile";
 
 export const ModelProfile: FunctionComponent = () => {
-  const modelId = useSelector(userIdSelector);
+  const params = useParams();
 
   const [modelInfo, setModelInfo] = useState<IModelProfile>();
 
   useEffect(() => {
-    getModelProfile(modelId).then((data) => {
-      setModelInfo(data[0]);
-    });
-  }, [modelId]);
+    if (params.id) {
+      getModelProfile(params.id).then((data) => {
+        setModelInfo(data[0]);
+      });
+    }
+  }, [params.id]);
 
   const languagesArr = modelInfo?.languages?.map((item: any) => {
     return item.label;
@@ -37,8 +38,8 @@ export const ModelProfile: FunctionComponent = () => {
     <>
       <Container>
         <Row className="justify-content-center">
-          <div className="col-6 mb-5">
-            <h3>My profile</h3>
+          <div className="col-lg-6 col-md-8 mb-5">
+            {/* <h3>{modelInfo?userName} profile</h3> */}
             <ListGroup className="mt-3 m-auto" style={{ textAlign: "left" }}>
               <ListProfile value={modelInfo?.aboutMe} title="About me:" />
               <ListProfile value={modelInfo?.age} title="Age:" />

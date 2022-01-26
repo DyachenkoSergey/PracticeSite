@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 
 export const ModelBlock: FunctionComponent = () => {
   return (
-    <Card className="w-100, h-auto">
+    <Card className="w-100, h-100">
       <Card.Body className="w-100, h-auto">
         <StreamVideo />
       </Card.Body>

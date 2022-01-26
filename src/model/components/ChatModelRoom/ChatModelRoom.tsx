@@ -78,55 +78,56 @@ export const ChatModelRoom: FunctionComponent<IChatProps> = ({
 
   return (
     <Container>
-      <Row>
-        <Card className="col-12 d-flex" style={{ height: "500px" }}>
-          <Card.Body>
-            <Row>
-              <div className="col-md-4 bg-light" style={{ overflow: "auto" }}>
-                <Card.Text>OnLine ({userBlock.length}):</Card.Text>
-                <ul className="list-group list-group-flush list-unstyled text-left">
-                  {userBlock}
+      <Row style={{ height: "100%" }}>
+        <Card className="col-12 d-flex mb-5 pt-2" style={{ height: "100%" }}>
+          <div className="d-flex" style={{ height: "80%" }}>
+            <div
+              className="col-md-4 bg-light"
+              style={{ overflow: "auto", height: "100%" }}
+            >
+              <Card.Text>OnLine ({userBlock.length}):</Card.Text>
+              <ul className="list-group list-group-flush list-unstyled text-left d-none d-md-block">
+                {userBlock}
+              </ul>
+            </div>
+
+            <div className="col-md-8 text-left">
+              <div
+                ref={messagesRef}
+                style={{
+                  textAlign: "left",
+                  overflow: "auto",
+                  height: "100%",
+                }}
+              >
+                <ul className="list-group list-unstyled">
+                  {messagesBlock({ messagesList, userName })}
                 </ul>
               </div>
-
-              <div className="col-md-8 text-left">
-                <div
-                  ref={messagesRef}
-                  style={{
-                    textAlign: "left",
-                    overflow: "auto",
-                    height: "370px",
-                  }}
-                >
-                  <ul className="list-group list-unstyled">
-                    {messagesBlock({ messagesList, userName })}
-                  </ul>
-                </div>
-              </div>
-              <hr className="m-2" />
-              <div className="col-md-12" style={{ height: "20%" }}>
-                <h6 style={{ textAlign: "center" }}>
-                  unregistered users cannot chat
-                </h6>
-                <div className="d-flex">
-                  <textarea
-                    className="w-100 p-1 focus-none"
-                    style={{
-                      resize: "none",
-                      height: "38px",
-                      marginRight: "5px",
-                    }}
-                    placeholder="Message"
-                    value={messageValue}
-                    onChange={(e) => setMessageValue(e.target.value)}
-                  ></textarea>
-                  <Button variant="primary" onClick={sendMessage}>
-                    Send
-                  </Button>
-                </div>
-              </div>
-            </Row>
-          </Card.Body>
+            </div>
+          </div>
+          <div className="col-md-12" style={{ height: "20%" }}>
+            <hr className="m-2" />
+            <h6 style={{ textAlign: "center" }}>
+              unregistered users cannot chat
+            </h6>
+            <div className="d-flex">
+              <textarea
+                className="w-100 p-1 focus-none"
+                style={{
+                  resize: "none",
+                  height: "40px",
+                  marginRight: "5px",
+                }}
+                placeholder="Message"
+                value={messageValue}
+                onChange={(e) => setMessageValue(e.target.value)}
+              ></textarea>
+              <Button variant="secondary" onClick={sendMessage}>
+                Send
+              </Button>
+            </div>
+          </div>
         </Card>
       </Row>
     </Container>

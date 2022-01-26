@@ -4,7 +4,7 @@ import { IUser } from "interfaces/user";
 
 export const axios = require("axios").default;
 
-interface IModelEditProfile {
+export interface IModelEditProfile {
   aboutMe?: string;
   age?: string;
   country?: string;
@@ -22,6 +22,17 @@ interface IEditModelProfileProps {
   modelId: string;
   values: IModelEditProfile;
 }
+
+export const getModelsWithoutSearchParams = async (): Promise<IUser[]> => {
+  try {
+    const response = await axios.get(`${server}${SERVER_PATHS.modelsList}`, {
+      withCredentials: false,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error();
+  }
+};
 
 export const getAllModels = async (values: string): Promise<IUser[]> => {
   try {
