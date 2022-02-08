@@ -17,7 +17,7 @@ export const SearchModels: FunctionComponent = () => {
   return (
     <InputBlock
       type="text"
-      placeholder="Search by all models"
+      placeholder="Search"
       onChange={changeSearchQueryParams}
       className="form-control"
       maxLength={11}

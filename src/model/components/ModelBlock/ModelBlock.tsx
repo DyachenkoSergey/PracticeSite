@@ -11,7 +11,6 @@ export const ModelBlock: FunctionComponent<IModelBlock> = ({
   previousModelId,
   nextModelId,
 }) => {
-
   return (
     <Card className="w-100, h-100">
       <Card.Body className="w-100, h-auto">

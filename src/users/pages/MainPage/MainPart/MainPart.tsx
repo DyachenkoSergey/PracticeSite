@@ -22,7 +22,7 @@ export const MainPart: FunctionComponent = () => {
 
   useEffect(() => {
     dispatch(getModels({ searchQueryParam, value: { [key]: value } }));
-  }, [params]);
+  }, [params, searchQueryParam]);
 
   const renderModel = modelsList.map((model: IUser) => (
     <ModelCard model={model} key={model.userId} />
