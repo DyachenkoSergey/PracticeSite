@@ -1,0 +1,1 @@
+export { CardModelProfile } from "./CardModelProfile"

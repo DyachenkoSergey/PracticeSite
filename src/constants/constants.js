@@ -3,6 +3,8 @@ export const SERVER_PATHS = {
   logIn: "/auth/logIn",
   logOut: "/auth/logOut",
 
+  getNumberOfTabModels: "/models/getNumberOfTabModels",
+  filterModels: "/models/filterModels",
   studioModels: "/models/studioModels",
   modelProfile: "/models/modelProfile",
   editModelProfile: "/models/editModelProfile",
@@ -150,4 +152,18 @@ export const languagesList = [
   { value: "XH", label: "Xhosa" },
   { value: "JI", label: "Yiddish" },
   { value: "ZU", label: "Zulu" },
+];
+export const listAllTabs = [
+  {
+    age: ["Teenagers", "Young", "Mom", "Mature", "Granny"],
+  },
+  {
+    bodyType: ["Skinny", "Athletic", "Curvy", "Bbw"],
+  },
+  {
+    hair: ["Black", "Blond(e)", "Brown", "Ginger", "Grey", "Bald"],
+  },
+  {
+    ethnicity: ["Arab", "Indian", "Asian", "Black", "Latina", "White"],
+  },
 ];

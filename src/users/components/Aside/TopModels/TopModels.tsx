@@ -10,19 +10,23 @@ interface ITopModelsProps {
 
 export const TopModels: FunctionComponent<ITopModelsProps> = ({ models }) => {
   return (
-    <div className="border border-secondary rounded p-5 shadow">
-      <h3 className="mb-4">Top models</h3>
+    <div
+      className="rounded p-1 shadow bg-secondary"
+      style={{ border: "2px solid #ccc" }}
+    >
+      <h4 className="mb-4 text-white">Top models</h4>
       <ListGroup as="ol" numbered variant="flush">
         {models.map((model) => (
           <ListGroup.Item
             as="li"
-            style={{ textAlign: "left" }}
+            style={{ textAlign: "left", border: "none" }}
             key={model.userId}
-            className="bg-transparent"
+            // className="bg-transparent"
+            className="bg-secondary text-white pt-0"
           >
             <Link
               to={`${SERVER_PATHS.modelRoom}/${model.userId}`}
-              className="text-dark text-decoration-none"
+              className="text-white text-decoration-none"
               key={model.userId}
             >
               {model.userName}

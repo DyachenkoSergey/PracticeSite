@@ -1,9 +1,5 @@
 import { useFormik } from "formik";
-import {
-  editModelProfile,
-  getModelProfile,
-  IModelEditProfile,
-} from "model/api/models";
+import { editModelProfile, getModelProfile } from "model/api/models";
 import { FunctionComponent, useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
 import {
@@ -16,12 +12,12 @@ import {
   Row,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { userIdSelector } from "store/selectors/auth";
+import { userIdSelector, userNameSelector } from "store/selectors/auth";
 import { languagesList } from "constants/constants";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import {
-  ageOption,
+  ageOptions,
   bodyTypeOptions,
   countryOption,
   ethnicityOptions,
@@ -29,11 +25,19 @@ import {
   genderOptions,
   hairOptions,
   sexualPreferenceOptions,
+  weightOptions,
+  heightOptions,
+  smokeOptions,
+  drinkOptions,
+  drugsOptions,
+  martialStatusOptions,
 } from "./options";
 import { FormControlSelect } from "./FormControlSelect";
+import { IModelEditProfile } from "interfaces/model";
 
 export const EditModelInfo: FunctionComponent = () => {
   const modelId = useSelector(userIdSelector);
+  const userName = useSelector(userNameSelector);
   const navigate = useNavigate();
 
   const [modelInfo, setModelInfo] = useState<IModelEditProfile>();
@@ -42,8 +46,8 @@ export const EditModelInfo: FunctionComponent = () => {
   useEffect(() => {
     getModelProfile(modelId).then((data) => {
       if (data) {
-        data[0]?.languages ? setSelected(data[0].languages) : setSelected([]);
-        setModelInfo(data[0]);
+        data?.languages ? setSelected(data.languages) : setSelected([]);
+        setModelInfo(data);
       }
     });
   }, [modelId]);
@@ -52,6 +56,7 @@ export const EditModelInfo: FunctionComponent = () => {
     enableReinitialize: true,
     initialValues: {
       aboutMe: modelInfo?.aboutMe || "",
+      userName: userName || "",
       age: modelInfo?.age || "",
       country: modelInfo?.country || "",
       languages: modelInfo?.languages || Option,
@@ -61,7 +66,17 @@ export const EditModelInfo: FunctionComponent = () => {
       ethnicity: modelInfo?.ethnicity || "",
       eyes: modelInfo?.eyes || "",
       hair: modelInfo?.hair || "",
+      weight: modelInfo?.weight || "",
+      height: modelInfo?.height || "",
       bodyType: modelInfo?.bodyType || "",
+      smoke: modelInfo?.smoke || "",
+      drink: modelInfo?.drink || "",
+      drugs: modelInfo?.drugs || "",
+      talents: modelInfo?.talents || "",
+      maritalStatus: modelInfo?.maritalStatus || "",
+      occupationMajor: modelInfo?.occupationMajor || "",
+      favoriteFood: modelInfo?.favoriteFood || "",
+      automobile: modelInfo?.automobile || "",
     },
     // validationSchema: editPageFormValidation,
     onSubmit: (values: IModelEditProfile) => {
@@ -105,7 +120,7 @@ export const EditModelInfo: FunctionComponent = () => {
                 labelName="Age"
                 onChange={formik.handleChange}
                 value={formik.values.age}
-                option={ageOption()}
+                option={ageOptions()}
               />
               <FormControlSelect
                 id="country"
@@ -130,13 +145,13 @@ export const EditModelInfo: FunctionComponent = () => {
                 <FormLabel htmlFor="birthday">
                   <strong>Birthday</strong>
                 </FormLabel>
-                <input
+                <FormControl
                   className="form-control"
-                  type="date"
-                  value={formik.values.birthday}
-                  onChange={formik.handleChange}
                   id="birthday"
-                  key="birthday"
+                  name="birthday"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.birthday}
                 />
               </FormGroup>
               <FormControlSelect
@@ -175,12 +190,118 @@ export const EditModelInfo: FunctionComponent = () => {
                 option={hairOptions()}
               />
               <FormControlSelect
+                id="weight"
+                labelName="Weight"
+                onChange={formik.handleChange}
+                value={formik.values.weight}
+                option={weightOptions()}
+              />
+              <FormControlSelect
+                id="height"
+                labelName="Height"
+                onChange={formik.handleChange}
+                value={formik.values.height}
+                option={heightOptions()}
+              />
+              <FormControlSelect
                 id="bodyType"
                 labelName="Body type"
                 onChange={formik.handleChange}
                 value={formik.values.bodyType}
                 option={bodyTypeOptions()}
               />
+              <FormControlSelect
+                id="smoke"
+                labelName="Smoke"
+                onChange={formik.handleChange}
+                value={formik.values.smoke}
+                option={smokeOptions()}
+              />
+              <FormControlSelect
+                id="drink"
+                labelName="Drink"
+                onChange={formik.handleChange}
+                value={formik.values.drink}
+                option={drinkOptions()}
+              />
+              <FormControlSelect
+                id="drugs"
+                labelName="Drugs"
+                onChange={formik.handleChange}
+                value={formik.values.drugs}
+                option={drugsOptions()}
+              />
+              <FormGroup className="mb-3 form-group">
+                <FormLabel htmlFor="talents">
+                  <strong>Talents</strong>
+                </FormLabel>
+                <FormControl
+                  as="textarea"
+                  rows={2}
+                  style={{ resize: "none" }}
+                  className="form-control"
+                  id="talents"
+                  name="talents"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.talents}
+                />
+              </FormGroup>
+              <FormControlSelect
+                id="maritalStatus"
+                labelName="Marital status"
+                onChange={formik.handleChange}
+                value={formik.values.maritalStatus}
+                option={martialStatusOptions()}
+              />
+              <FormGroup className="mb-3 form-group">
+                <FormLabel htmlFor="occupationMajor">
+                  <strong>Occupation / Major</strong>
+                </FormLabel>
+                <FormControl
+                  as="textarea"
+                  rows={2}
+                  style={{ resize: "none" }}
+                  className="form-control"
+                  id="occupationMajor"
+                  name="occupationMajor"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.occupationMajor}
+                />
+              </FormGroup>
+              <FormGroup className="mb-3 form-group">
+                <FormLabel htmlFor="favoriteFood">
+                  <strong>Favorite food</strong>
+                </FormLabel>
+                <FormControl
+                  as="textarea"
+                  rows={2}
+                  style={{ resize: "none" }}
+                  className="form-control"
+                  id="favoriteFood"
+                  name="favoriteFood"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.favoriteFood}
+                />
+              </FormGroup>
+              <FormGroup className="mb-3 form-group">
+                <FormLabel htmlFor="automobile">
+                  <strong>Automobile</strong>
+                </FormLabel>
+                <FormControl
+                  as="textarea"
+                  rows={2}
+                  style={{ resize: "none" }}
+                  className="form-control"
+                  id="automobile"
+                  name="automobile"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.automobile}
+                />
+              </FormGroup>
               <div className="text-center">
                 <Button
                   type="submit"

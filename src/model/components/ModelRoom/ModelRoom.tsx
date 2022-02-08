@@ -45,8 +45,21 @@ export const ModelRoom: FunctionComponent = () => {
     navigate(`/modelProfile/${params.id}`);
   };
 
+  const modelIndex = models?.findIndex((item) => item.userName === modelName);
+
+  const previousModelId =
+    modelIndex - 1 < 0
+      ? models[models.length - 1]?.userId
+      : models[modelIndex - 1]?.userId;
+  const nextModelId =
+    modelIndex + 1 > models.length
+      ? models[0]?.userId
+      : models[modelIndex + 1]?.userId;
+
+  console.log(nextModelId);
+
   const renderModel = models.map((model: IUser) => (
-    <ModelCard model={model} key={model.userId} isModelRoom={true} />
+    <ModelCard model={model} key={model.userId} />
   ));
 
   return (
@@ -67,11 +80,14 @@ export const ModelRoom: FunctionComponent = () => {
         </div>
         <Row>
           <div
-            className="d-md-flex d-block breakpoints"
-            style={{ height: "500px" }}
+            className="d-md-flex d-block breakpoints pb-3"
+            style={{ height: "520px" }}
           >
             <div className="col-12 col-md-7 pr-2 d-flex d-md-flex d-block">
-              <ModelBlock />
+              <ModelBlock
+                previousModelId={previousModelId}
+                nextModelId={nextModelId}
+              />
             </div>
             <div className="col-12 col-md-5 pr-3 d-flex d-md-flex d-block">
               <ChatModelRoom roomId={params.id} userName={userName} />
@@ -79,8 +95,16 @@ export const ModelRoom: FunctionComponent = () => {
           </div>
         </Row>
         <Row>
-          <div className="col-12 d-flex flex-wrap">
-            {models ? renderModel : null}
+          <div
+            className="col-12 pb-5"
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignContent: "flex-start",
+            }}
+          >
+            {renderModel}
           </div>
         </Row>
       </Container>

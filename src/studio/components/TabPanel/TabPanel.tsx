@@ -3,11 +3,24 @@ import { FunctionComponent } from "react";
 import { Col, Container, Row, Nav, Tab } from "react-bootstrap";
 import { SignUpModel } from "../Tabs/SignUp";
 import { StudioModels } from "../Tabs/StudioModels/StudioModels";
+import { useDispatch, useSelector } from "react-redux";
+import { setStudioDefaultKey } from "store/slices/models";
+import { studioDefaultKey } from "store/selectors/models";
 
 export const TabPanel: FunctionComponent = () => {
+  const dispatch = useDispatch();
+  const defaultKey = useSelector(studioDefaultKey);
+
+  const defaultStudioModels = () => {
+    dispatch(setStudioDefaultKey("StudioModels"));
+  };
+  const defaultSignUpModel = () => {
+    dispatch(setStudioDefaultKey("SignUpModel"));
+  };
+
   return (
     <Container style={{ minHeight: "80vh" }}>
-      <Tab.Container id="left-tabs-example" defaultActiveKey="StudioModels">
+      <Tab.Container id="left-tabs-example" defaultActiveKey={defaultKey}>
         <Row className="justify-content-center">
           <Col sm={3}>
             <div>
@@ -16,6 +29,7 @@ export const TabPanel: FunctionComponent = () => {
                   <Nav.Link
                     eventKey="StudioModels"
                     style={{ cursor: "pointer" }}
+                    onClick={defaultStudioModels}
                   >
                     All models
                   </Nav.Link>
@@ -24,6 +38,7 @@ export const TabPanel: FunctionComponent = () => {
                   <Nav.Link
                     eventKey="SignUpModel"
                     style={{ cursor: "pointer" }}
+                    onClick={defaultSignUpModel}
                   >
                     Add new model
                   </Nav.Link>

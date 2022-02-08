@@ -1,15 +1,5 @@
+import { IMessagesBlockProps } from "interfaces/model";
 import { Card } from "react-bootstrap";
-
-interface IMessageList {
-  roomId: string;
-  userName: string;
-  text: string;
-}
-
-interface IMessagesBlockProps {
-  messagesList: IMessageList[] | null;
-  userName: string;
-}
 
 export const messagesBlock = ({
   messagesList,

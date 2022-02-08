@@ -1,11 +1,20 @@
 import { FunctionComponent, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { userIdSelector } from "store/selectors/auth";
 
-export const StreamVideo: FunctionComponent = () => {
+interface IStream {
+  previousModelId: string;
+  nextModelId: string;
+}
+
+export const StreamVideo: FunctionComponent<IStream> = ({
+  previousModelId,
+  nextModelId,
+}) => {
   const params = useParams();
+  const navigate = useNavigate();
   const userId = useSelector(userIdSelector);
 
   const [isMyRoom, setIsMyRoom] = useState(false);
@@ -17,6 +26,18 @@ export const StreamVideo: FunctionComponent = () => {
       setIsMyRoom(false);
     }
   }, [params.id, userId]);
+
+  const pushToPreviousModelRoom = () => {
+    if (previousModelId) {
+      navigate(`/modelRoom/${previousModelId}`);
+    }
+  };
+
+  const pushToNextModelRoom = () => {
+    if (nextModelId) {
+      navigate(`/modelRoom/${nextModelId}`);
+    }
+  };
 
   const streamCamVideo = () => {
     const constraints = {
@@ -64,12 +85,28 @@ export const StreamVideo: FunctionComponent = () => {
             </Button>
           </div>
         ) : (
-          <div className="d-flex justify-content-center">
-            <Button variant="secondary" style={{ marginRight: "10px" }}>
-              Private
+          <div className="d-flex justify-content-between">
+            <Button
+              variant="secondary"
+              style={{ marginRight: "10px" }}
+              onClick={pushToPreviousModelRoom}
+            >
+              previous
             </Button>
-            <Button variant="secondary" style={{ marginRight: "10px" }}>
-              Tip model
+            <div>
+              <Button variant="secondary" style={{ marginRight: "10px" }}>
+                Private
+              </Button>
+              <Button variant="secondary" style={{ marginRight: "10px" }}>
+                Tip model
+              </Button>
+            </div>
+            <Button
+              variant="secondary"
+              style={{ marginRight: "10px" }}
+              onClick={pushToNextModelRoom}
+            >
+              next
             </Button>
           </div>
         )}

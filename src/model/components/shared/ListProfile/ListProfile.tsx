@@ -4,21 +4,18 @@ import { ListGroupItem } from "react-bootstrap";
 interface ListProfileProps {
   value?: string;
   title: string;
-  style?: React.CSSProperties | undefined;
-  lineBreak?: boolean;
 }
 
 export const ListProfile: FunctionComponent<ListProfileProps> = ({
   value,
   title,
-  style,
-  lineBreak,
 }) => {
   return (
     <>
-      <ListGroupItem style={style}>
-        <strong style={{ paddingRight: "30px" }}>{title}</strong>
-        {lineBreak ? <br /> : null}
+      <ListGroupItem style={{ border: "none" }}>
+        <strong style={{ display: "inline-block", width: "150px" }}>
+          {title}
+        </strong>
         {value}
       </ListGroupItem>
     </>

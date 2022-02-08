@@ -1,27 +1,13 @@
 import { server, SERVER_PATHS } from "constants/constants";
-import { IModelProfile } from "interfaces/model";
+import {
+  IAmountOfElements,
+  IEditModelProfileProps,
+  IGetFilterModels,
+  IModelProfile,
+} from "interfaces/model";
 import { IUser } from "interfaces/user";
-
+import { toast } from "react-toastify";
 export const axios = require("axios").default;
-
-export interface IModelEditProfile {
-  aboutMe?: string;
-  age?: string;
-  country?: string;
-  languages?: any;
-  birthday?: string;
-  gender?: string;
-  sexualPreference?: string;
-  ethnicity?: string;
-  eyes?: string;
-  hair?: string;
-  bodyType?: string;
-}
-
-interface IEditModelProfileProps {
-  modelId: string;
-  values: IModelEditProfile;
-}
 
 export const getModelsWithoutSearchParams = async (): Promise<IUser[]> => {
   try {
@@ -34,13 +20,25 @@ export const getModelsWithoutSearchParams = async (): Promise<IUser[]> => {
   }
 };
 
-export const getAllModels = async (values: string): Promise<IUser[]> => {
+export const getAllModels = async ({
+  searchQueryParam = "",
+  value = {},
+}: IGetFilterModels): Promise<IUser[]> => {
+  console.log(searchQueryParam, value);
   try {
-    const response = await axios.post(
-      `${server}${SERVER_PATHS.modelsList}`,
-      {
-        values,
-      },
+    const queryKey = Object.keys(value)[0];
+    const requestValue = Object.values(value)[0];
+    if (queryKey && requestValue) {
+      const response = await axios.get(
+        `${server}${SERVER_PATHS.filterModels}?searchQueryParam=${searchQueryParam}&${queryKey}=${requestValue}`,
+        {
+          withCredentials: false,
+        }
+      );
+      return response.data;
+    }
+    const response = await axios.get(
+      `${server}${SERVER_PATHS.filterModels}?searchQueryParam=${searchQueryParam}`,
       {
         withCredentials: false,
       }
@@ -70,7 +68,7 @@ export const getModel = async (modelId: string): Promise<IUser> => {
 
 export const getModelProfile = async (
   modelId: string
-): Promise<IModelProfile[]> => {
+): Promise<IModelProfile> => {
   try {
     const response = await axios.post(
       `${server}${SERVER_PATHS.modelProfile}`,
@@ -115,6 +113,22 @@ export const getTopModels = async (): Promise<IUser[]> => {
     });
     return response.data;
   } catch (error) {
+    throw new Error();
+  }
+};
+
+export const getNumberOfTabModels = async (): Promise<IAmountOfElements> => {
+  try {
+    const response = await axios.get(
+      `${server}${SERVER_PATHS.getNumberOfTabModels}`,
+      {
+        withCredentials: false,
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    const message = error.response.data.message || "Something went wrong";
+    toast(message);
     throw new Error();
   }
 };

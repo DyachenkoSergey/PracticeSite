@@ -2,7 +2,6 @@ import { FunctionComponent } from "react";
 import { Navbar, Nav, NavLink } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { SearchModels } from "sharedComponents/SearchModels";
 import {
   roleSelector,
   tokenSelector,
@@ -42,9 +41,6 @@ export const NaviBar: FunctionComponent = () => {
                 navigate("/");
               }}
             />
-            <Nav.Link>
-              <SearchModels />
-            </Nav.Link>
           </Nav>
           <Nav>
             {token ? (

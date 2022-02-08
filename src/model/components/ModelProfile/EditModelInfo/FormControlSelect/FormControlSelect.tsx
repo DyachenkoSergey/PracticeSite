@@ -34,6 +34,7 @@ export const FormControlSelect: FunctionComponent<IFormSelectProps> = ({
           onChange={onChange}
           value={value}
         >
+          <option></option>
           {option}
         </FormSelect>
       </FormGroup>

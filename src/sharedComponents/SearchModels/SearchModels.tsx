@@ -6,8 +6,8 @@ import { useDebouncedCallback } from "use-debounce/lib";
 
 export const SearchModels: FunctionComponent = () => {
   const dispatch = useDispatch();
-  const debounced = useDebouncedCallback((searchQueryParams) => {
-    dispatch(setSearchQueryParam(searchQueryParams));
+  const debounced = useDebouncedCallback((searchQueryParam) => {
+    dispatch(setSearchQueryParam({ searchQueryParam }));
   }, 1000);
 
   const changeSearchQueryParams = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -17,7 +17,7 @@ export const SearchModels: FunctionComponent = () => {
   return (
     <InputBlock
       type="text"
-      placeholder="Search for models"
+      placeholder="Search by all models"
       onChange={changeSearchQueryParams}
       className="form-control"
       maxLength={11}

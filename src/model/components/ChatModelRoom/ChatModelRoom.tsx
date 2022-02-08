@@ -1,21 +1,11 @@
 import { socket } from "constants/socket";
+import { IChatProps, IMessageList } from "interfaces/model";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { Button, Card, Container, Row } from "react-bootstrap";
+import { Button, Card, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { tokenSelector } from "store/selectors/auth";
 import { messagesBlock } from "./MessagesBlock";
-
-interface IChatProps {
-  roomId?: string;
-  userName: string;
-}
-
-interface IMessageList {
-  roomId: string;
-  userName: string;
-  text: string;
-}
 
 export const ChatModelRoom: FunctionComponent<IChatProps> = ({
   roomId,
@@ -77,9 +67,12 @@ export const ChatModelRoom: FunctionComponent<IChatProps> = ({
   };
 
   return (
-    <Container>
+    <div
+      className="w-100"
+      style={{ paddingRight: "15px", paddingLeft: "20px" }}
+    >
       <Row style={{ height: "100%" }}>
-        <Card className="col-12 d-flex mb-5 pt-2" style={{ height: "100%" }}>
+        <Card className="col-12 d-flex pt-3" style={{ height: "100%" }}>
           <div className="d-flex" style={{ height: "80%" }}>
             <div
               className="col-md-4 bg-light"
@@ -130,6 +123,6 @@ export const ChatModelRoom: FunctionComponent<IChatProps> = ({
           </div>
         </Card>
       </Row>
-    </Container>
+    </div>
   );
 };
